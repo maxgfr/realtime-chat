@@ -4,9 +4,8 @@
   align-items: center;
   background: white;
   border-top: 1px solid #eeeef1;
-  position: fixed;
-  bottom: 0px;
   width: 100%;
+  position: absolute;
 }
 
 @supports (backdrop-filter: blur(20px)) {
@@ -22,7 +21,7 @@
   font-size: 14px;
   height: 40px;
   background: none;
-  width: 70%;
+  width: 100%;
 }
 
 .compose-send {

@@ -1,4 +1,4 @@
 .message-list-container {
   padding: 10px;
-  padding-bottom: 70px;
+  min-height: 650px;
 }
