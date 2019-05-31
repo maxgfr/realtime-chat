@@ -111,7 +111,7 @@ export default class Home extends React.Component {
     this.setState({input: evt.target.value});
   }
 
-  _handleValid = () => {
+  _handleValidUsername = () => {
     this.setState({ open: !this.state.open });
   }
 
@@ -125,7 +125,7 @@ export default class Home extends React.Component {
       <div className="messenger">
         <PopUpUsername
           open={this.state.open}
-          handleValid={this._handleValid}
+          handleValid={this._handleValidUsername}
           onChangeUsername={this._onChangeUsername}
         />
         <div className="scrollable sidebar">
