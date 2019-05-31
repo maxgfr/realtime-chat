@@ -116,7 +116,7 @@ export default class Home extends React.Component {
   }
 
   _onChangeUsername = (evt) => {
-    console.log(evt.target.value)
+    //console.log(evt.target.value)
     this.setState({ username: evt.target.value });
   }
 
