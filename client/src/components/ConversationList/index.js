@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ConversationSearch from '../ConversationSearch';
 import ConversationListItem from '../ConversationListItem';
-import axios from 'axios';
+
 
 import './ConversationList.css';
 
@@ -14,28 +14,6 @@ export default class ConversationList extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getConversations();
-  }
-
-  getConversations = () => {
-    axios.get('https://randomuser.me/api/?results=20').then(response => {
-      this.setState(prevState => {
-        let conversations = response.data.results.map(result => {
-          return {
-            photo: result.picture.large,
-            name: `${result.name.first} ${result.name.last}`,
-            text: 'Hello world! This is a long message that needs to be truncated.'
-          };
-        });
-
-        let conversationsSorted = conversations;
-
-        return { ...prevState, conversationsSorted, conversations };
-      });
-    });
-  }
-
   _onChangeText = (evt) => {
     console.log(evt.target.value);
     var resultTab = [];
@@ -45,6 +23,12 @@ export default class ConversationList extends Component {
       }
     }
     this.setState({conversationsSorted: resultTab})
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.conversations !== this.props.conversations) {
+      this.setState({conversations: this.props.conversations, conversationsSorted: this.props.conversations});
+    }
   }
 
   render() {

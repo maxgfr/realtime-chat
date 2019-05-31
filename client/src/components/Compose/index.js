@@ -11,7 +11,7 @@ export default class Compose extends Component {
           onChange={this.props.handleChange}
           type="text"
           className="compose-input"
-          placeholder="Type a message.."
+          placeholder="Type a message..."
         />
         <button className="compose-send" onClick={this.props.onSend}><SendIcon style={{fontSize:14}}/></button>
       </div>
