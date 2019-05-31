@@ -63,7 +63,7 @@ app.get('/members/:channel', async (req, res) => {
   });
 });
 
-app.get('/send', async (req, res) => {
+app.post('/send', async (req, res) => {
   if(!req.body) {
     res.json({success: false, message: 'no body'});
     return;
@@ -116,7 +116,4 @@ app.listen(expressPort, () => console.log(`Express app is listening on port ${ex
 
 io.on('connection', (socket) => {
   console.log('A user is connected to socket.io')
-  socket.on('message', () => {
-    console.log('obj');
-  });
 });
