@@ -1,4 +1,5 @@
 import React from "react";
+import PopUpUsername from '../DialogSelect';
 import ConversationList from '../ConversationList';
 import MessageList from '../MessageList';
 import './Home.css';
@@ -12,7 +13,8 @@ export default class Home extends React.Component {
     this.state = {
       messages: [],
       conversations: [],
-      input: ''
+      input: '',
+      open: true
     };
   }
 
@@ -109,16 +111,28 @@ export default class Home extends React.Component {
     this.setState({input: evt.target.value});
   }
 
+  _handleValid = () => {
+    this.setState({ open: !this.state.open });
+  }
+
+  _onChangeUsername = (evt) => {
+    console.log(evt.target.value)
+    this.setState({ username: evt.target.value });
+  }
+
   render() {
     return (
       <div className="messenger">
-
+        <PopUpUsername
+          open={this.state.open}
+          handleValid={this._handleValid}
+          onChangeUsername={this._onChangeUsername}
+        />
         <div className="scrollable sidebar">
           <ConversationList
             conversations={this.state.conversations}
           />
         </div>
-
         <div className="scrollable content">
           <MessageList
             messages={this.state.messages}
