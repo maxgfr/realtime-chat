@@ -106,13 +106,13 @@ export default class Home extends React.Component {
     console.log('sisi');
   }
 
+  _handleValidUsername = () => {
+    this.setState({ open: !this.state.open });
+  }
+
   _onChangeText = (evt) => {
     //console.log(evt.target.value)
     this.setState({input: evt.target.value});
-  }
-
-  _handleValidUsername = () => {
-    this.setState({ open: !this.state.open });
   }
 
   _onChangeUsername = (evt) => {
