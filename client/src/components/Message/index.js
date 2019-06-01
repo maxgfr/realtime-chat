@@ -26,7 +26,7 @@ export default class Message extends Component {
               { friendlyTimestamp }
             </div>
         }
-
+        <p className="author">{data.author}</p>
         <div className="bubble-container">
           <div className="bubble" title={friendlyTimestamp}>
             { data.message }
