@@ -25,7 +25,7 @@ export default class Home extends React.Component {
   }
 
 
-  componentDidMount() {
+  componentDidMount () {
     //this.props.history.push('/'); //to change url
     socket.on('new_message', (data) => {
       console.log(data);
@@ -42,6 +42,18 @@ export default class Home extends React.Component {
       var arr = this.state.conversations;
       arr.push({name: data});
       this.setState({conversations: arr});
+    })
+    socket.on('bye_user', (data) => {
+      console.log(data);
+      var arr = this.state.conversations;
+      arr = this.removeByAttr(arr, 'name', data.username);
+      this.setState({conversations: arr});
+    })
+    socket.on('notif', (data) => {
+      console.log(data);
+      if(data.receiver === this.state.username) {
+          alert(data.sender+' sent you a poke');
+      }
     })
     axios.get('http://localhost:8000/members/channel').then(response => {
       if(response.data.success) {
@@ -76,23 +88,28 @@ export default class Home extends React.Component {
     this.setupBeforeUnloadListener();
   }
 
-  setupBeforeUnloadListener = () => {
+  removeByAttr = (arr, attr, value) =>{
+    var i = arr.length;
+    while(i--){
+       if(arr[i]
+           && arr[i].hasOwnProperty(attr)
+           && arr[i][attr] === value
+         ){
+
+           arr.splice(i,1);
+
+       }
+    }
+    return arr;
+  }
+
+  setupBeforeUnloadListener = async () => {
       window.addEventListener("beforeunload", (ev) => {
           ev.preventDefault();
-          return this.doSomethingBeforeUnload();
+          socket.emit('bye_user', {username: this.state.username, channel: 'channel'});
+          return;
       });
   };
-
-  doSomethingBeforeUnload = () => {
-    if(this.state.username !== '') {
-      axios.post('http://localhost:8000/leave', {
-        channel: 'channel',
-        username: this.state.username
-      }).then(response => {
-        console.log(response);
-      });
-    }
-  }
 
   _onSend = () => {
     if(this.state.input !== '') {
@@ -137,6 +154,14 @@ export default class Home extends React.Component {
     this.setState({ username: evt.target.value });
   }
 
+  _onClickItem = (conv) => {
+    if(conv.name !== this.state.username) {
+      socket.emit('notif', {sender: this.state.username, receiver: conv.name});
+    } else {
+      alert('You cannot send a poke to yourself');
+    }
+  }
+
   render() {
     return (
       <div className="messenger">
@@ -148,6 +173,7 @@ export default class Home extends React.Component {
         <div className="scrollable sidebar">
           <ConversationList
             conversations={this.state.conversations}
+            onClickItem={this._onClickItem}
           />
         </div>
         <div className="scrollable content">

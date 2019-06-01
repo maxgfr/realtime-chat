@@ -116,7 +116,6 @@ const server = app.listen(expressPort, () => console.log(`Express app is listeni
 const io = socket(server);
 
 io.on('connection', (socket) => {
-
   socket.on('send', (msg) => {
       //console.log(msg);
       socket.broadcast.emit('new_message', msg);
@@ -128,5 +127,19 @@ io.on('connection', (socket) => {
 
   socket.on('new_user', (data) => {
       socket.broadcast.emit('new_user', data);
+  });
+
+  socket.on('notif', (data) => {
+      io.emit('notif', data);
+  });
+
+  socket.on('bye_user', (data) => {
+      let channel = data.channel || 'channel';
+      let username = data.username || 'username';
+      client.srem(channel, username, (err, result) => {
+        if(!err) {
+          socket.broadcast.emit('bye_user', data);
+        }
+      });
   });
 });

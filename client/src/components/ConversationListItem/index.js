@@ -13,7 +13,7 @@ export default class ConversationListItem extends Component {
     const { name } = this.props.data;
 
     return (
-      <div className="conversation-list-item">
+      <div className="conversation-list-item" onClick={this.props.onClickItem}>
         <img className="conversation-photo" src={'https://robohash.org/'+name+'.png'} alt="conversation" />
         <h1 className="conversation-title">{ name }</h1>
       </div>

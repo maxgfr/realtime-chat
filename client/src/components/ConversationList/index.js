@@ -42,6 +42,7 @@ export default class ConversationList extends Component {
             <ConversationListItem
               key={conversation.name}
               data={conversation}
+              onClickItem={() => {this.props.onClickItem(conversation)}}
             />
           )
         }
