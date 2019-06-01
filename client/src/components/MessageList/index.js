@@ -42,11 +42,11 @@ export default class MessageList extends Component {
         let previousDuration = moment.duration(currentMoment.diff(previousMoment));
         prevBySameAuthor = previous.author === current.author;
 
-        if (prevBySameAuthor && previousDuration.as('hours') < 1) {
+        if (prevBySameAuthor && previousDuration.as('seconds') < 5) {
           startsSequence = false;
         }
 
-        if (previousDuration.as('hours') < 1) {
+        if (previousDuration.as('seconds') < 5) {
           showTimestamp = false;
         }
       }
@@ -56,7 +56,7 @@ export default class MessageList extends Component {
         let nextDuration = moment.duration(nextMoment.diff(currentMoment));
         nextBySameAuthor = next.author === current.author;
 
-        if (nextBySameAuthor && nextDuration.as('hours') < 1) {
+        if (nextBySameAuthor && nextDuration.as('seconds') < 5) {
           endsSequence = false;
         }
       }
