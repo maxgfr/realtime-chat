@@ -4,7 +4,7 @@ const redis = require("redis");
 const bodyParser  = require('body-parser');
 const socket = require('socket.io');
 const expressPort = 8000;
-const client = redis.createClient({host: '127.0.0.1', port: 6379});
+const client = redis.createClient({host: 'redis', port: 6379});
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -62,7 +62,7 @@ app.get('/members/:channel', (req, res) => {
   });
 });
 
-app.get('/send', (req, res) => {
+app.post('/send', (req, res) => {
   if(!req.body) {
     res.json({success: false, message: 'no body'});
     return;

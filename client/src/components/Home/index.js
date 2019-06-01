@@ -53,13 +53,16 @@ export default class Home extends React.Component {
       }
     });
     axios.get('http://localhost:8000/messages/stream').then(response => {
-      console.log(response.data);
+      //console.log(response.data);
       if(response.data.success) {
         var arr = [];
         for(var i = 0; i< response.data.result.length; i++) {
           for(var j = 0; j < response.data.result[i].length; j++) {
+            //console.log(response.data.result[i][j]);
             var data = JSON.parse(response.data.result[i][j][1]);
-            arr.push({author: data.author, message: data.message, timestamp: data.timestamp});
+            if(data.field) {
+              arr.push({author: data.author, message: data.message, timestamp: data.timestamp});
+            }
           }
         }
         this.setState({messages: arr});
