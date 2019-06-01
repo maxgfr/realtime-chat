@@ -62,15 +62,15 @@ app.get('/members/:channel', (req, res) => {
   });
 });
 
-app.post('/send', (req, res) => {
+app.get('/send', (req, res) => {
   if(!req.body) {
     res.json({success: false, message: 'no body'});
     return;
   }
   let stream = req.body.stream || 'stream';
-  let username = req.body.username || 'username';
-  let message = req.body.message || 'message';
-  client.xadd(stream, '*', username, message, (err, result) => {
+  let field = req.body.field || 'data';
+  let data = JSON.stringify(req.body);
+  client.xadd(stream, '*', field, data, (err, result) => {
     if(err) {
       //console.log(err)
       res.json({success: false, message: err});

@@ -12,9 +12,7 @@ export default class Compose extends Component {
           value={this.props.input}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              console.log(e);
-              e.target.value = this.props.input;
-              this.props.handleChange(e);
+              this.props.onSend();
             }
           }}
           type="text"
