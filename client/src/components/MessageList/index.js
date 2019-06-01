@@ -9,8 +9,8 @@ export default class MessageList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: '',
-      uid: ''
+      messages: props.messages,
+      uid: props.uid
     };
   }
 
@@ -89,6 +89,7 @@ export default class MessageList extends Component {
         </div>
         <Compose
           onSend={this.props.onSendMessage}
+          input={this.props.input}
           handleChange={this.props.onChangeMessage}
         />
       </div>

@@ -1,9 +1,12 @@
 import React from "react";
-import PopUpUsername from '../DialogSelect';
+import PopUpUsername from '../PopUpUsername';
 import ConversationList from '../ConversationList';
 import MessageList from '../MessageList';
 import './Home.css';
 import axios from 'axios';
+import socketIOClient from 'socket.io-client';
+
+const socket = socketIOClient('http://localhost:8000');
 
 export default class Home extends React.Component {
 
@@ -18,105 +21,59 @@ export default class Home extends React.Component {
     };
   }
 
+
   componentDidMount() {
     //this.props.history.push('/'); //to change url
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        messages: [
-          {
-            id: 1,
-            author: 'apple',
-            message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 2,
-            author: 'orange',
-            message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 3,
-            author: 'orange',
-            message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 4,
-            author: 'apple',
-            message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 5,
-            author: 'apple',
-            message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 6,
-            author: 'apple',
-            message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 7,
-            author: 'orange',
-            message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 8,
-            author: 'orange',
-            message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 9,
-            author: 'apple',
-            message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 10,
-            author: 'orange',
-            message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
-            timestamp: new Date().getTime()
-          },
-        ]
-      };
-    });
-    axios.get('https://randomuser.me/api/?results=20').then(response => {
-      this.setState(prevState => {
-        let conversations = response.data.results.map(result => {
-          return {
-            photo: result.picture.large,
-            name: `${result.name.first} ${result.name.last}`,
-            text: 'Hello world! This is a long message that needs to be truncated.'
-          };
-        });
-
-        return { ...prevState, conversations };
-      });
-    });
+    socket.on('new_message', (data) => {
+      console.log(data);
+    })
+    socket.on('typing', (data) => {
+      console.log(data);
+    })
+    socket.on('new_user', (data) => {
+      console.log(data);
+    })
   }
 
   _onSend = () => {
-    console.log('sisi');
+    if(this.state.input !== '') {
+      var msg = {
+        stream: 'stream',
+        author: this.state.username,
+        message: this.state.input,
+        timestamp: new Date().getTime()
+      }
+      socket.emit('send', msg);
+      axios.post('http://localhost:8000/send', msg).then(response => {
+        console.log(response);
+      });
+      var arr = this.state.messages;
+      arr.push(msg);
+      this.setState({messages: arr, input: ''});
+    }
   }
 
   _handleValidUsername = () => {
-    this.setState({ open: !this.state.open });
+    if(this.state.username !== '') {
+      socket.emit('new_user', this.state.username);
+      axios.post('http://localhost:8000/join', {
+        channel: 'channel',
+        username: this.state.username
+      }).then(response => {
+        console.log(response);
+      });
+      var arr = this.state.conversations;
+      arr.push({name: this.state.username});
+      this.setState({open: !this.state.open, conversations: arr});
+    }
   }
 
   _onChangeText = (evt) => {
-    //console.log(evt.target.value)
     this.setState({input: evt.target.value});
+    socket.emit('typing', this.state.username);
   }
 
   _onChangeUsername = (evt) => {
-    //console.log(evt.target.value)
     this.setState({ username: evt.target.value });
   }
 
@@ -136,8 +93,9 @@ export default class Home extends React.Component {
         <div className="scrollable content">
           <MessageList
             messages={this.state.messages}
-            uid={'apple'}
+            uid={this.state.username}
             onSendMessage={this._onSend}
+            input={this.state.input}
             onChangeMessage={this._onChangeText}
           />
         </div>

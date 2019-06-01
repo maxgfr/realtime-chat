@@ -9,8 +9,8 @@ export default class ConversationList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      conversations: [],
-      conversationsSorted: []
+      conversations: props.conversations,
+      conversationsSorted: props.conversations
     };
   }
 

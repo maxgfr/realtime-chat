@@ -2,8 +2,7 @@ const app = require('express')();
 const cors = require('cors');
 const redis = require("redis");
 const bodyParser  = require('body-parser');
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const socket = require('socket.io');
 const expressPort = 8000;
 const client = redis.createClient({host: '127.0.0.1', port: 6379});
 
@@ -14,7 +13,7 @@ app.get('/', (req, res) => {
   res.json({success: true, message: 'api is working'});
 })
 
-app.post('/join', async (req, res) => {
+app.post('/join', (req, res) => {
     if(!req.body) {
       res.json({success: false, message: 'no body'});
       return;
@@ -32,7 +31,7 @@ app.post('/join', async (req, res) => {
     });
 });
 
-app.post('/leave', async (req, res) => {
+app.post('/leave', (req, res) => {
   if(!req.body) {
     res.json({success: false, message: 'no body'});
     return;
@@ -50,7 +49,7 @@ app.post('/leave', async (req, res) => {
   });
 });
 
-app.get('/members/:channel', async (req, res) => {
+app.get('/members/:channel', (req, res) => {
   let channel = req.params.channel;
   client.smembers(channel, (err, result) => {
     if(err) {
@@ -63,7 +62,7 @@ app.get('/members/:channel', async (req, res) => {
   });
 });
 
-app.post('/send', async (req, res) => {
+app.post('/send', (req, res) => {
   if(!req.body) {
     res.json({success: false, message: 'no body'});
     return;
@@ -82,7 +81,7 @@ app.post('/send', async (req, res) => {
   });
 });
 
-app.get('/messages/:stream', async (req, res) => {
+app.get('/messages/:stream', (req, res) => {
   if(!req.body) {
     res.json({success: false, message: 'no body'});
     return;
@@ -99,7 +98,7 @@ app.get('/messages/:stream', async (req, res) => {
   });
 });
 
-app.get('/total/:stream', async (req, res) => {
+app.get('/total/:stream', (req, res) => {
   let stream = req.params.stream;
   client.xlen(stream, (err, result) => {
     if(err) {
@@ -112,8 +111,22 @@ app.get('/total/:stream', async (req, res) => {
   });
 });
 
-app.listen(expressPort, () => console.log(`Express app is listening on port ${expressPort}!`));
+const server = app.listen(expressPort, () => console.log(`Express app is listening on port ${expressPort}!`));
+
+const io = socket(server);
 
 io.on('connection', (socket) => {
-  console.log('A user is connected to socket.io')
+
+  socket.on('send', (msg) => {
+      //console.log(msg);
+      socket.broadcast.emit('new_message', msg);
+  });
+
+  socket.on('typing', (data) => {
+      io.emit('typing', data);
+  });
+
+  socket.on('new_user', (data) => {
+      socket.broadcast.emit('new_user', data);
+  });
 });

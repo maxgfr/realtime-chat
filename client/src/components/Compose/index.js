@@ -9,6 +9,14 @@ export default class Compose extends Component {
       <div className="compose">
         <input
           onChange={this.props.handleChange}
+          value={this.props.input}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              console.log(e);
+              e.target.value = this.props.input;
+              this.props.handleChange(e);
+            }
+          }}
           type="text"
           className="compose-input"
           placeholder="Type a message..."
