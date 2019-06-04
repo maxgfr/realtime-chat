@@ -1,0 +1,1 @@
+scalac -bootclasspath /Users/maxime/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.8.jar -classpath /Users/maxime/Downloads/analysis/target/scala-2.12/classes /Users/maxime/Downloads/analysis/src/main/scala/maxgfr/Hello.scala
