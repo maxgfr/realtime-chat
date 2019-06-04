@@ -27,7 +27,3 @@ services:
     container_name: redis
     ports:
         - "6379:6379"
-  analysis:
-    build:          ./analysis
-    restart:        always
-    container_name: analysis

@@ -9,7 +9,8 @@ export default class Message extends Component {
       isMine,
       startsSequence,
       endsSequence,
-      showTimestamp
+      showTimestamp,
+      idMessage
     } = this.props;
 
     const friendlyTimestamp = moment(data.timestamp).format('LLLL');
@@ -28,7 +29,7 @@ export default class Message extends Component {
         }
         <p className="author">{data.author}</p>
         <div className="bubble-container">
-          <div className="bubble" title={friendlyTimestamp}>
+          <div className="bubble" title={friendlyTimestamp} onClick={() => { this.props.onClickItem(idMessage) }}>
             { data.message }
           </div>
         </div>

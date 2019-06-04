@@ -13,6 +13,10 @@
   text-transform: uppercase;
 }
 
+.bubble:hover {
+  cursor: pointer;
+}
+
 .message .bubble-container {
   font-size: 14px;
   display: flex;

@@ -5,6 +5,12 @@ const bodyParser  = require('body-parser');
 const socket = require('socket.io');
 const expressPort = 8000;
 const client = redis.createClient({host: 'redis', port: 6379});
+const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+const toneAnalyzer = new ToneAnalyzerV3({
+  version: '2017-09-21',
+  iam_apikey: 'YYrq7Cm4UvMDhzc2NtdxTD0QQNxcqJArYLRw55aGfwAe',
+  url: 'https://gateway-lon.watsonplatform.net/tone-analyzer/api'
+});
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -79,6 +85,26 @@ app.post('/send', (req, res) => {
       res.json({success: true, result: result});
     }
   });
+});
+
+app.post('/tone', (req, res) => {
+  if(!req.body) {
+    res.json({success: false, message: 'no body'});
+    return;
+  }
+  const toneParams = {
+    tone_input: { 'text': req.body.message },
+    content_type: 'application/json',
+  };
+  toneAnalyzer.tone(toneParams)
+    .then(toneAnalysis => {
+      //console.log(JSON.stringify(toneAnalysis, null, 2));
+      res.json({success: true, result: toneAnalysis});
+    })
+    .catch(err => {
+      //console.log('error:', err);
+      res.json({success: false, message: err});
+    });
 });
 
 app.get('/messages/:stream', (req, res) => {

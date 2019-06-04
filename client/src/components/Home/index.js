@@ -1,5 +1,6 @@
 import React from "react";
 import PopUpUsername from '../PopUpUsername';
+import PopUp from '../PopUp';
 import ConversationList from '../ConversationList';
 import MessageList from '../MessageList';
 import './Home.css';
@@ -20,7 +21,9 @@ export default class Home extends React.Component {
       open: true,
       num_tot_message: 0,
       username: '',
-      username_typing: ''
+      username_typing: '',
+      openWatson: false,
+      loadingWatson: false
     };
   }
 
@@ -145,6 +148,10 @@ export default class Home extends React.Component {
     }
   }
 
+  _handleValidWatson = () => {
+    this.setState({openWatson: false, messageWatson: ''});
+  }
+
   _onChangeText = (evt) => {
     this.setState({input: evt.target.value});
     socket.emit('typing', this.state.username);
@@ -162,6 +169,22 @@ export default class Home extends React.Component {
     }
   }
 
+  _onClickMessage = (i) => {
+    console.log(this.state.messages[i]);
+    this.setState({loadingWatson: true, openWatson: true});
+    axios.post('http://localhost:8000/tone', {
+      message: this.state.messages[i].message
+    }).then(response => {
+      var message = '';
+      if(response.data.success) {
+        message = "According to Watson, this message belongs to : " + response.data.result.document_tone.tones[0].tone_name + ", the accuracy is "+response.data.result.document_tone.tones[0].score +"%.";
+      } else {
+        message = 'Things don\'t appear to be working at the moment. Please try again later.';
+      }
+      this.setState({loadingWatson: false, messageWatson: message});
+    });
+  }
+
   render() {
     return (
       <div className="messenger">
@@ -169,6 +192,12 @@ export default class Home extends React.Component {
           open={this.state.open}
           handleValid={this._handleValidUsername}
           onChangeUsername={this._onChangeUsername}
+        />
+        <PopUp
+          open={this.state.openWatson}
+          loading={this.state.loadingWatson}
+          message={this.state.messageWatson}
+          handleValid={this._handleValidWatson}
         />
         <div className="scrollable sidebar">
           <ConversationList
@@ -183,6 +212,7 @@ export default class Home extends React.Component {
             onSendMessage={this._onSend}
             input={this.state.input}
             onChangeMessage={this._onChangeText}
+            onClickMessage={this._onClickMessage}
           />
         </div>
       </div>
