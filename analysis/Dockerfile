@@ -12,6 +12,4 @@ WORKDIR /analysis
 
 ADD . /analysis
 
-ENTRYPOINT ["./run_jar.sh"]
-
 CMD sbt run
