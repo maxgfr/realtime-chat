@@ -170,13 +170,14 @@ export default class Home extends React.Component {
   }
 
   _onClickMessage = (i) => {
-    console.log(this.state.messages[i]);
+    //console.log(this.state.messages[i]);
     this.setState({loadingWatson: true, openWatson: true});
     axios.post('http://localhost:8000/tone', {
       message: this.state.messages[i].message
     }).then(response => {
       var message = '';
-      if(response.data.success) {
+      console.log(response.data);
+      if(response.data.success && response.data.result.document_tone.tones[0]) {
         message = "According to Watson, this message belongs to : " + response.data.result.document_tone.tones[0].tone_name + ", the accuracy is "+response.data.result.document_tone.tones[0].score +"%.";
       } else {
         message = 'Things don\'t appear to be working at the moment. Please try again later.';
