@@ -3,19 +3,19 @@
 ## Tech Stack
 maxgfr/realtime-chat is built on the following main stack:
 
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) – Languages
+- [ExpressJS](http://expressjs.com/) – Microframeworks (Backend)
+- [Material-UI](https://github.com/mui/material-ui) – Front-End Frameworks
 - [Node.js](http://nodejs.org/) – Frameworks (Full Stack)
 - [React](https://reactjs.org/) – Javascript UI Libraries
+- [React Router](https://github.com/rackt/react-router) – JavaScript Framework Components
 - [Redis](http://redis.io/) – In-Memory Databases
 - [Socket.IO](http://socket.io/) – Realtime Backend / API
-- [ExpressJS](http://expressjs.com/) – Microframeworks (Backend)
-- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) – Languages
-- [Material-UI](https://github.com/mui/material-ui) – Front-End Frameworks
+- [Docker](https://www.docker.com/) – Virtual Machine Platforms & Containers
+- [Yarn](https://yarnpkg.com/) – Front End Package Manager
 - [Lodash](https://lodash.com) – Javascript Utilities & Libraries
-- [React Router](https://github.com/rackt/react-router) – JavaScript Framework Components
 - [Moment.js](http://momentjs.com/) – Javascript Utilities & Libraries
 - [axios](https://github.com/mzabriskie/axios) – Javascript Utilities & Libraries
-- [Yarn](https://yarnpkg.com/) – Front End Package Manager
-- [Docker](https://www.docker.com/) – Virtual Machine Platforms & Containers
 
 Full tech stack [here](/techstack.md)
 
@@ -25,19 +25,19 @@ Full tech stack [here](/techstack.md)
 ## Tech Stack
 maxgfr/realtime-chat is built on the following main stack:
 
+- <img width='25' height='25' src='https://img.stackshare.io/service/1209/javascript.jpeg' alt='JavaScript'/> [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) – Languages
+- <img width='25' height='25' src='https://img.stackshare.io/service/1163/hashtag.png' alt='ExpressJS'/> [ExpressJS](http://expressjs.com/) – Microframeworks (Backend)
+- <img width='25' height='25' src='https://img.stackshare.io/service/1904/default_44d81cb9fadbc3688b7e91a6d5217d0ea5358b57.png' alt='Material-UI'/> [Material-UI](https://github.com/mui/material-ui) – Front-End Frameworks
 - <img width='25' height='25' src='https://img.stackshare.io/service/1011/n1JRsFeB_400x400.png' alt='Node.js'/> [Node.js](http://nodejs.org/) – Frameworks (Full Stack)
 - <img width='25' height='25' src='https://img.stackshare.io/service/1020/OYIaJ1KK.png' alt='React'/> [React](https://reactjs.org/) – Javascript UI Libraries
+- <img width='25' height='25' src='https://img.stackshare.io/service/3350/8261421.png' alt='React Router'/> [React Router](https://github.com/rackt/react-router) – JavaScript Framework Components
 - <img width='25' height='25' src='https://img.stackshare.io/service/1031/default_cbce472cd134adc6688572f999e9122b9657d4ba.png' alt='Redis'/> [Redis](http://redis.io/) – In-Memory Databases
 - <img width='25' height='25' src='https://img.stackshare.io/service/1161/vI0ZZlhZ_400x400.png' alt='Socket.IO'/> [Socket.IO](http://socket.io/) – Realtime Backend / API
-- <img width='25' height='25' src='https://img.stackshare.io/service/1163/hashtag.png' alt='ExpressJS'/> [ExpressJS](http://expressjs.com/) – Microframeworks (Backend)
-- <img width='25' height='25' src='https://img.stackshare.io/service/1209/javascript.jpeg' alt='JavaScript'/> [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) – Languages
-- <img width='25' height='25' src='https://img.stackshare.io/service/1904/default_44d81cb9fadbc3688b7e91a6d5217d0ea5358b57.png' alt='Material-UI'/> [Material-UI](https://github.com/mui/material-ui) – Front-End Frameworks
+- <img width='25' height='25' src='https://img.stackshare.io/service/586/n4u37v9t_400x400.png' alt='Docker'/> [Docker](https://www.docker.com/) – Virtual Machine Platforms & Containers
+- <img width='25' height='25' src='https://img.stackshare.io/service/5848/44mC-kJ3.jpg' alt='Yarn'/> [Yarn](https://yarnpkg.com/) – Front End Package Manager
 - <img width='25' height='25' src='https://img.stackshare.io/service/2438/lodash.png' alt='Lodash'/> [Lodash](https://lodash.com) – Javascript Utilities & Libraries
-- <img width='25' height='25' src='https://img.stackshare.io/service/3350/8261421.png' alt='React Router'/> [React Router](https://github.com/rackt/react-router) – JavaScript Framework Components
 - <img width='25' height='25' src='https://img.stackshare.io/service/3643/Xrtdc94q_400x400.png' alt='Moment.js'/> [Moment.js](http://momentjs.com/) – Javascript Utilities & Libraries
 - <img width='25' height='25' src='https://img.stackshare.io/no-img-open-source.png' alt='axios'/> [axios](https://github.com/mzabriskie/axios) – Javascript Utilities & Libraries
-- <img width='25' height='25' src='https://img.stackshare.io/service/5848/44mC-kJ3.jpg' alt='Yarn'/> [Yarn](https://yarnpkg.com/) – Front End Package Manager
-- <img width='25' height='25' src='https://img.stackshare.io/service/586/n4u37v9t_400x400.png' alt='Docker'/> [Docker](https://www.docker.com/) – Virtual Machine Platforms & Containers
 
 Full tech stack [here](/techstack.md)
 
@@ -48,7 +48,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [maxgfr/realtime-chat](https://github.com/maxgfr/realtime-chat)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|31<br/>Tools used|01/05/24 <br/>Report generated|
+|31<br/>Tools used|02/29/24 <br/>Report generated|
 |------|------|
 </div>
 
